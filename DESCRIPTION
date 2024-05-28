@@ -1,0 +1,40 @@
+Package: morphology
+Version: 0.0.0.9000
+Title: Morphological description of low-dimensional categorical arrays
+Description: The {morphology} package implements a flexible API for the
+    calculation of nearest-neighbour based morphological quantities for
+    one-, two- or three-dimensional categorical arrays.
+Authors@R:
+    c(
+        person(
+            given = "Bart",
+            family = "Rogiers",
+            email = "bart.rogiers@sckcen.be",
+            role = c("cre", "aut"),
+            comment = c(ORCID = "0000-0002-8836-0988")
+        ),
+        person("SCK CEN", role = "cph")
+    )
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Depends: 
+    R (>= 2.10)
+Imports:
+    tibble,
+    std,
+    mmand,
+    matrixStats,
+    nabor,
+    reshape2,
+    ggplot2
+Suggests: 
+    voxl,
+    knitr,
+    rmarkdown
+Remotes: 
+    rogiersbart/std,
+    rogiersbart/voxl
+LazyData: true
+VignetteBuilder: knitr
