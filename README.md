@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# The {morphology} R package<img src="man/figures/logo.png" align="right" width="25%"/><br><small><font color="#999">Morphological description of low-dimensional categorical arrays</font></small>
+# The {morphology} R package<img src="man/figures/logo.png" align="right" width="25%"/><br><small><font color="#999">Morphological description of 3D categorical arrays</font></small>
 
 <!-- badges: start -->
 
@@ -34,9 +34,12 @@ description <- my_array |>
   look_at("voxels", of_category = 1) |> 
   look_in(direction = "xyz") |>
   look_for(neighbours = 100, within = 10) |> 
-  describe()
+  describe() |> 
+  scale_by("inverse neighbourhood") |>
+  finalise()
 ```
 
-See the getting started vignette for a more comprehensive overview.
+See [Get started](articles/morphology.html) for a more comprehensive
+overview.
 
 ## Note

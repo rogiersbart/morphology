@@ -1,6 +1,6 @@
 Package: morphology
 Version: 0.0.0.9000
-Title: Morphological description of low-dimensional categorical arrays
+Title: Morphological description of 3D categorical arrays
 Description: The {morphology} package implements a flexible API for the
     calculation of nearest-neighbour based morphological quantities for
     one-, two- or three-dimensional categorical arrays.

@@ -923,3 +923,5 @@ While this is not a problem in itself, it is useful to be aware of this. It does
 reduce the efficiency of self-queries systematically, and it does affect scaling
 by the number of voxel faces for instance (see the self-transition probability
 above).
+
+## References
