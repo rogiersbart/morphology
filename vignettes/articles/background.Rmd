@@ -1,0 +1,135 @@
+---
+title: "Background"
+bibliography: [references.bib, packages.bib]
+---
+
+```{r}
+#| include: false
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r}
+#| include: false
+knitr::write_bib(
+  c("nabor", "mmand", "spatstat.explore", "reticulate"),
+  here::here("vignettes/articles/packages.bib")
+)
+```
+
+## Morphological quantities
+
+Morphological quantities have been studied for a long time already in the
+framework of materials research. While this can be traced back to the
+determination of effective electrical properties of a dilute suspension of
+spherical particles in the first half of the 20th century, only in the 1950s and
+1960s, higher-order statistical functions, or so-called n-point probability
+functions were introduced, for describing higher concentrations of particles
+[see @torquato1982 and references therein]. By the time we started evaluating
+morphological quantities of digital representations of material microstructures
+(*i.e.* categorical arrays), several "classic" quantities like the two-point
+probability function, the lineal path function, and the chord length and pore
+size distributions, which are all used until today, were already in place
+[@coker1995]. Since then, most research has been related to advective and
+diffusive transport in two-phase (*i.e.* pore vs solid) media, focussing on the
+relation between their effective transport properties and morphological
+quantities [\*e.g.\* @hlushkou2015; @roding2020; @bagherian2021], and the
+stochastic reconstruction of random media honouring such morphological
+quantities and the corresponding effective properties [\*e.g.\* @yeong1998;
+@jiao2009; @pant2015; @lemmens2019a]. More recently, in the late 1990s and early
+21st century, with the advent of reactive transport modelling, and need for
+increasingly complex phenomenological assessments (*e.g.* in the framework of
+radioactive waste disposal), there is an increasing need for morphological
+description, as well as stochastic reconstruction, of multi-phase (*i.e.* more
+than two) media, where typically different solid phases are distinguished,
+additional to the void or pore phase. The **efforts into characterisation of
+multi-phase systems have been limited** however [\*e.g.\* @pant2014; @chen2014a;
+@lemmens2019a], while recent approaches involving multiple-point statistics,
+exemplar-based texture synthesis, and deep learning largely skip the
+characterization step, and directly aim at reconstructing [@bostanabad2018].
+
+## Spatial point patterns
+
+While nearest-neighbour statistics have been in use for the description of
+particle systems in materials research [\*e.g.\* @torquato1995; @torquato1995a;
+@middlemas2020], similar measures of morphology have been in use for the
+analysis of spatial point patterns (*e.g.* the reduced second moment or K
+function, the pair correlation function, the empty space function), with a wide
+range of application domains (from ecology [\*e.g.\* @szmyt2014] to histology
+[\*e.g.\* @bull2023]), where they were extended to cross-type measures for
+multi-type point patterns (one type vs another, or one type vs all others), and
+to 3D point patterns [@baddeley1993]. Instead of applying such cross-type
+nearest-neighbour statistics to particle systems or point patterns, they can be
+applied to digital representations of microstructures (*i.e.* categorical
+arrays) instead. In fact, any categorical array can be seen as a multi-type
+point pattern, and application of spatial point pattern analysis [\*e.g.\*
+through the tooling provided by @R-spatstat.explore] is straightforward when
+using the array indices as spatial coordinates. One important **aspect that is
+missing here is the notion of connectivity within a given phase**, which does
+come up with important morphological quantities like the lineal path and cluster
+function.
+
+## Expectation vs distribution
+
+Most of the classic ways to describe morphology can be based somehow on the
+expectation of the amount of neighbouring voxels within a certain distance. Just
+**considering the expectation**, or rather a single summary statistic, in fact
+means that **we are only extracting a small amount of information from the full
+k nearest neighbour distributions for all evaluated points**. We could in fact
+also consider measures of spread, or even specific quantiles, to quantify how
+consistent the considered descriptor is locally within the assessed array. The
+specific morphological quantity labelled "coarseness" has been used for such
+purposes [see *e.g.* @coker1995], quantifying variability in the local volume
+fraction, in function of a given window size, but there is no reason why we
+cannot extend this to all other descriptors where we need to search for more
+than a single neighbour. Within the spatial point patterns domain, this is
+termed second-order neighbourhood analysis [@getis2010], and gives rise to
+localized versions of the commonly used descriptors [see *e.g.*
+@R-spatstat.explore], again in function of a given window size.
+
+## The {morphology} R package
+
+The combination of all of the above is exactly the idea behind the {morphology}
+package, where we leverage:
+
+1.  The approximate nearest-neighbour search provided by {nabor} [@R-nabor],
+    which wraps libnabo, a very performant nearest-neighbour search library
+    using a k-d tree data structure [@elseberg2012],
+2.  The connected components algorithm provided by {mmand} [@R-mmand], with a
+    variable connectivity kernel, and
+3.  The shortest path algorithms provided by {igraph},
+
+to implement a flexible API that allows us to
+
+1.  perform different kinds of (k) nearest neighbour queries,
+2.  compute all the "classic" morphological quantities, but also very recent
+    ones involving shortest paths [@bagherian2021], from such queries by
+    applying different kinds of normalisation and using "minus sampling" (aka
+    "guard area") edge correction (both used in the spatial point patterns
+    [@baddeley1993] and morphological quantities [@coker1995] domains),
+3.  compute their cross-category extensions (when applicable, so not for
+    connectivity and shortest path-related quantities),
+4.  compute 1D, 2D and 3D versions,
+5.  enable filtering on 1D, 2D or 3D connectivity,
+6.  allow the use of arbitrary summary functions, typically of the numbers of
+    neighbours in function of distance.
+
+## Related work
+
+The PoreSpy [@gostick2019] Python package provides similar functionality, but is
+constrained a bit closer to the classic morphological quantities. It also has a
+broader scope, which includes pore network extraction, exporting to common
+formats for process modelling, *etc.*
+
+The MCRpy [@seibert2022c] Python package provides differentiable versions of the
+classic morphological quantities, and additionally Gram matrices for
+characterizing morphology. The gradient information provided by these can be
+leveraged in the reconstruction optimization problem.
+
+While all of this is readily accessible from R through {reticulate}
+[@R-reticulate], with {morphology}, we are aiming at more flexible, detailed,
+and extensive evaluation of morphological quantities.
+
+## References

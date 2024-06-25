@@ -11,9 +11,12 @@ Authors@R:
             family = "Rogiers",
             email = "bart.rogiers@sckcen.be",
             role = c("cre", "aut"),
-            comment = c(ORCID = "0000-0002-8836-0988")
+            comment = c(
+              ORCID = "0000-0002-8836-0988",
+              url = "<https://rogiersbart.github.io>"
+            )
         ),
-        person("SCK CEN", role = "cph")
+        person("SCK CEN", role = c("cph", "fnd"))
     )
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -28,13 +31,13 @@ Imports:
     matrixStats,
     nabor,
     reshape2,
-    ggplot2
+    ggplot2,
+    igraph
 Suggests: 
-    voxl,
     knitr,
-    rmarkdown
+    rmarkdown,
+    lobstr
 Remotes: 
-    rogiersbart/std,
-    rogiersbart/voxl
+    rogiersbart/std
 LazyData: true
 VignetteBuilder: knitr

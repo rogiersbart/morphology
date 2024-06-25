@@ -2,6 +2,7 @@
 
 export(describe)
 export(finalise)
+export(gen_fully_penetrable_spheres)
 export(look_at)
 export(look_for)
 export(look_in)

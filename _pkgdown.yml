@@ -1,0 +1,43 @@
+home:
+  title: The {morphology} R package
+  description: Morphological description of low-dimensional categorical arrays
+url: https://rogiersbart.github.io/morphology
+authors:
+  Bart Rogiers:
+    href: https://rogiersbart.github.io
+  SCK CEN:
+    href: https://www.sckcen.be
+navbar:
+  components:
+    home:
+      icon: fa-home fa-lg
+      href: index.html
+  structure:
+    left:  [home, intro, articles, tutorials, reference, news]
+    right: [search, github]
+reference:
+- title: "Morphological description"
+  desc: >
+    Functions for constructing {morphology} pipechains.
+  contents:
+  - look_at
+  - look_in
+  - look_for
+  - describe
+  - scale_by
+  - finalise
+  - visualise
+- title: "Summary functions"
+  desc: >
+    Helpers for use within `describe()` calls.
+  contents:
+  - q05
+  - q25
+  - q50
+  - q75
+  - q95
+- title: "Generators"
+  desc: >
+    Functions to generate categorical arrays.
+  contents:
+  - gen_fully_penetrable_spheres

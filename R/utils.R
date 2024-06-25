@@ -34,28 +34,30 @@ make3d <- function(a) {
 }
 make1d <- function(a, direction = "x") {
   a <- a |> add_border(direction)
-  value_column <- if ("value" %in% names(a)) "value" else "component"
+  value_column <- if ("value" %in% names(a)) "value" else NULL
+  component_column <- if ("component" %in% names(a)) "component" else NULL
   if (direction == "x") a$x <- a$x + max(a$x) * (2*a$y - 2) + max(a$x) * max(a$y) * (2*a$z - 2)
   if (direction == "y") a$y <- a$y + max(a$y) * (2*a$x - 2) + max(a$y) * max(a$x) * (2*a$z - 2)
   if (direction == "z") a$z <- a$z + max(a$z) * (2*a$y - 2) + max(a$z) * max(a$y) * (2*a$x - 2)
-  return(a[, c(direction, value_column, "border")])
+  return(a[, c(direction, value_column, component_column, "border", "id")])
 }
 make2d <- function(a, direction = "xy") {
-  value_column <- if ("value" %in% names(a)) "value" else "component"
+  value_column <- if ("value" %in% names(a)) "value" else NULL
+  component_column <- if ("component" %in% names(a)) "component" else NULL
   if (direction %in% c("xy", "yx")) {
     a <- a |> add_border(c("x","y"))
     a$x <- a$x + max(a$x) * (2*a$z - 2)
-    return(a[,c("x", "y", value_column, "border")])
+    return(a[,c("x", "y", value_column, component_column, "border", "id")])
   }
   if (direction %in% c("xz", "zx")) {
     a <- a |> add_border(c("x","z"))
     a$x <- a$x + max(a$x) * (2*a$y - 2)
-    return(a[,c("x", "z", value_column, "border")])
+    return(a[,c("x", "z", value_column, component_column, "border", "id")])
   }
   if (direction %in% c("zy", "yz")) {
     a <- a |> add_border(c("y","z"))
     a$y <- a$y + max(a$y) * (2*a$x - 2)
-    return(a[,c("y", "z", value_column, "border")])
+    return(a[,c("y", "z", value_column, component_column, "border", "id")])
   }
   stop("Wrong direction")
 }
@@ -103,4 +105,7 @@ get_attribute <- function(x, name) {
 has_attribute <- function(x, name) {
   attr_names <- names(attributes(x))
   paste0("morphology.", name) %in% attr_names
+}
+xyz_to_id <- function(df, dims) {
+  (df$z - 1) * prod(dims[1:2]) + (df$x - 1) * dims[2] + df$y
 }
